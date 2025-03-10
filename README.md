@@ -55,14 +55,18 @@ S3_REGION=
 
     `CREATE TABLE testdb.users (user_id bigint not null, name VARCHAR(100));`
 
-3. Run `go run generate/script.go` to generate dummy data.
+3. `go run generate/script.go` to generate dummy data.
 4. Make the POST call to Debezium to register the connector.
-5. Run `go run main.go`.
+5. `go run main.go`.
 
-## How It Works
+## How it works
 
 1. The application initializes connections to Kafka, MySQL, and AWS S3
 2. It subscribes to a Kafka topic containing CDC events in Debezium format
 3. For each event, it extracts user_id and name and writes them to a CSV buffer
 4. When the buffer reaches a threshold size (10MB), it's uploaded to S3 as a part of a multipart upload
 5. After all events are processed, any remaining data is uploaded and the multipart upload is completed
+
+## References
+
+- https://medium.com/nagoya-foundation/simple-cdc-with-debezium-kafka-a27b28d8c3b8
